@@ -1,0 +1,10 @@
+Package Structure :
+1. Bindings
+2. Components
+3. Controllers
+4. Models
+5. Pages
+5.1 Section
+6. Routes
+7. Services
+8. Utils
