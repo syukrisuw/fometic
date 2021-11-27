@@ -24,76 +24,86 @@ class MainPage extends GetView<MainPageController> {
 
   @override
   Widget build(BuildContext context) {
-    return SetaraScaffold(
-      scaffoldKey: controller.scaffoldKey,
-      controller: controller,
-      resizeToAvoidBottomInset: true,
-      onPressedFAB: controller.controlMenu,
-      onClickMenu: (value1, value2) {controller.appController.onClickMenu(value1, value2, controller.scaffoldKey);},
-      appBar: AppBar(
-        toolbarHeight: 40,
-        leading: const SizedBox(
-          width: 10,
-        ),
-        title: TextButton(
-          onPressed: () {
-            Get.to(() => SplashPage());
+    return GestureDetector(
+        onTap: () {
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child: SetaraScaffold(
+          scaffoldKey: controller.scaffoldKey,
+          controller: controller,
+          resizeToAvoidBottomInset: true,
+          onPressedFAB: controller.controlMenu,
+          onClickMenu: (value1, value2) {
+            controller.appController
+                .onClickMenu(value1, value2, controller.scaffoldKey);
           },
-          child: Text(pageTitle),
-        ),
-        actions: <Widget>[
-          const SearchField(),
-          GetBuilder<MainPageController>(
-            init: MainPageController(),
-            builder: (controller) {
-              return Container(
-                child: controller.isUserLoggedIn
-                    ? ProfileCard(
-                        logOutPressed: () {
-                          controller.userLoggedOut();
-                          logger.info("User Sign Out");
-                        },
-                      )
-                    : TextButton(
-                        child: const Text(SignInText),
-                        onPressed: () {
-                          controller.userLoggedIn();
-                          logger.info("User Sign In");
-                        },
-                      ),
-              );
-            },
-          )
-        ],
-      ),
-      body: SafeArea(
-        child: Stack(
-          children: [
-            SizedBox(
-              // Page Container that takes 5/6 part of the screen
-              height: double.infinity,
-              width: MediaQuery.of(context).size.width,
-              child: GetBuilder<MainPageController>(
-                builder: (controller) {
-                  if (controller.setaraPageWidget == null) {
-                    controller.setupSetaraSectionWidget(initialContentWidget);
-                  }
-
-                  return controller.setaraPageWidget!;
-                },
-              ),
+          appBar: AppBar(
+            toolbarHeight: 40,
+            leading: const SizedBox(
+              width: 10,
             ),
-            // We want this side menu only for large screen
-            if (Responsive.isDesktop(context))
-              SizedBox(
-                width: MediaQuery.of(context).size.width / 6,
-                // and it takes 1/6 part of the screen
-                child:
-                    SideMenu(onClickMenu: (value1, value2) {controller.appController.onClickMenu(value1, value2, controller.scaffoldKey);}),
-              ),
-          ],
-        ),
-      ),
-    );
+            title: TextButton(
+              onPressed: () {
+                Get.to(() => SplashPage());
+              },
+              child: Text(pageTitle),
+            ),
+            actions: <Widget>[
+              const SearchField(),
+              GetBuilder<MainPageController>(
+                init: MainPageController(),
+                builder: (controller) {
+                  return Container(
+                    child: controller.isUserLoggedIn
+                        ? ProfileCard(
+                            logOutPressed: () {
+                              controller.userLoggedOut();
+                              logger.info("User Sign Out");
+                            },
+                          )
+                        : TextButton(
+                            child: const Text(SignInText),
+                            onPressed: () {
+                              controller.userLoggedIn();
+                              logger.info("User Sign In");
+                            },
+                          ),
+                  );
+                },
+              )
+            ],
+          ),
+          body: SafeArea(
+            child: Stack(
+              children: [
+                SizedBox(
+                  // Page Container that takes 5/6 part of the screen
+                  height: double.infinity,
+                  width: MediaQuery.of(context).size.width,
+                  child: GetBuilder<MainPageController>(
+                    builder: (controller) {
+                      if (controller.setaraPageWidget == null) {
+                        controller
+                            .setupSetaraSectionWidget(initialContentWidget);
+                      }
+
+                      return controller.setaraPageWidget!;
+                    },
+                  ),
+                ),
+                // We want this side menu only for large screen
+                if (Responsive.isDesktop(context))
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width / 6,
+                    // and it takes 1/6 part of the screen
+                    child: SideMenu(onClickMenu: (value1, value2) {
+                      controller.appController
+                          .onClickMenu(value1, value2, controller.scaffoldKey);
+                    }),
+                  ),
+              ],
+            ),
+          ),
+        ));
   }
 }

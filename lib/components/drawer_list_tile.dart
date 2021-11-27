@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fometic/utils/strutils/constants.dart';
 
 class DrawerListTile extends StatelessWidget {
   DrawerListTile({
@@ -17,9 +18,11 @@ class DrawerListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      shape: RoundedRectangleBorder(
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
+    return SizedBox(
+      height: 40,
+        child: ListTile(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       tileColor: Theme.of(context).primaryColor,
       focusColor: Theme.of(context).focusColor,
@@ -34,6 +37,6 @@ class DrawerListTile extends StatelessWidget {
         title,
         style: Theme.of(context).textTheme.bodyText1,
       ),
-    );
+    ));
   }
 }

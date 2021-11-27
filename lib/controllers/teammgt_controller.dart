@@ -8,6 +8,9 @@ final logger = SimpleLogger();
 
 class TeammgtController extends GetxController {
   final AppController appController = Get.find<AppController>(tag: "AppController");
+  late FocusNode? initialFocusNode;
+  PageStorageKey<String> teammgtPageKey = const PageStorageKey<String>("TeamManagement Page");
+
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
 
@@ -20,7 +23,15 @@ class TeammgtController extends GetxController {
 
   @override
   void onInit() {
+    initialFocusNode = FocusNode();
     super.onInit();
+  }
+
+
+  @override
+  void onClose() {
+    initialFocusNode?.dispose();
+    super.onClose();
   }
 
   void onSubmitButtonPressed() {

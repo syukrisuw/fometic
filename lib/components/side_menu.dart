@@ -74,6 +74,14 @@ class SideMenu extends StatelessWidget {
             height: minHeightPadding,
           ),
           DrawerListTile(
+            title: "Demo",
+            svgSrc: "assets/icons/demo.svg",
+            press: () => onClickMenu!("Demo", "OnClick"),
+          ),
+          const SizedBox(
+            height: minHeightPadding,
+          ),
+          DrawerListTile(
             title: "Laporan",
             svgSrc: "assets/icons/menu_doc.svg",
             press: () {},

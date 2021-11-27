@@ -48,7 +48,6 @@ class AppController extends GetxController {
   }
 
   void onClickMenu(String menuName, String actionPushed, GlobalKey<ScaffoldState> scaffoldKey) {
-    logger.info("menuName : $menuName  is being $actionPushed");
     switch (menuName) {
       case "Home":
         {
@@ -71,6 +70,11 @@ class AppController extends GetxController {
       case "Agenda":
         {
           setupSetaraSectionWidget(AgendaSection());
+        }
+        break;
+      case "Demo":
+        {
+          Get.toNamed("/demo");
         }
         break;
       case "Team":

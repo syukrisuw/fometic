@@ -4,7 +4,7 @@ import 'package:fometic/utils/strutils/constants.dart';
 ThemeData lightTheme = ThemeData(
   primaryColorLight: Colors.black,
   canvasColor: const Color(0x0061B060),
-  primaryTextTheme: TextTheme(bodyText1: TextStyle(color: Colors.black)),
+  primaryTextTheme: const TextTheme(bodyText1: TextStyle(color: Colors.black)),
   brightness: Brightness.light,
   cardColor: const Color(0xFF9EFF9C),
   cardTheme: const CardTheme(
@@ -20,22 +20,23 @@ ThemeData lightTheme = ThemeData(
   textButtonTheme: TextButtonThemeData(
     style: TextButton.styleFrom(
       primary: Colors.deepPurple,
-      backgroundColor: Color(0xFF9EFF9C),
-      minimumSize: Size(88, 36),
-      padding: EdgeInsets.symmetric(horizontal: 16.0),
+      backgroundColor: const Color(0xFF9EFF9C),
+      minimumSize: const Size(88, 36),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(10.0)),
       ),
     ),
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
-    style: ButtonStyle(
-      foregroundColor: MaterialStateProperty.all<Color>(Colors.green),
-      ),
+    style: ElevatedButton.styleFrom(
+      minimumSize: Size.zero,
+      padding: EdgeInsets.zero,
+    ),
   ),
   buttonTheme: const ButtonThemeData(
       colorScheme: ColorScheme(
-          primary: Colors.greenAccent,
+          primary: Colors.purple,
           primaryVariant: Colors.green,
           secondary: Colors.blueAccent,
           secondaryVariant: Color(0xFF041A81),
@@ -51,7 +52,7 @@ ThemeData lightTheme = ThemeData(
       disabledColor: Colors.black26),
   inputDecorationTheme: const InputDecorationTheme(
     contentPadding: EdgeInsets.only(left: minFormContentPadding),
-    fillColor: Color(0xFF9EFF9C),
+    fillColor: Color(0xFF67D764),
     filled: true,
     focusColor: Colors.brown,
     labelStyle: TextStyle(
@@ -81,7 +82,7 @@ ThemeData lightTheme = ThemeData(
     button: TextStyle(color: Colors.black54, fontSize: formContentTextSize),
   ),
   colorScheme: const ColorScheme(
-      primary: Colors.greenAccent,
+      primary: Colors.purple,
       primaryVariant: Colors.green,
       secondary: Colors.blueAccent,
       secondaryVariant: Color(0xFF041A81),

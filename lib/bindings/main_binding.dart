@@ -1,3 +1,4 @@
+import 'package:fometic/controllers/demo_page_controller.dart';
 import 'package:fometic/controllers/login_page_controller.dart';
 import 'package:fometic/controllers/teammgt_controller.dart';
 import 'package:get/get.dart';
@@ -13,6 +14,7 @@ class MainBinding extends Bindings {
     //Cannot using tag because the controller used in GetView
     Get.put<MainPageController>(MainPageController(),  permanent: true);
     Get.lazyPut(()=>LoginPageController(), fenix: true);
+    Get.put<DemoPageController>(DemoPageController(),  permanent: true);
     Get.put<TeammgtController>(TeammgtController(),  permanent: true);
     //Get.lazyPut(()=>TeammgtController(), fenix: true);
     //Get.put(TransactionController());

@@ -6,6 +6,7 @@ const bgColor = Color(0xFF212332);
 const opacityMaskColor = Color(0xB2E8E8E8);
 const maxIconHeight = 14.0;
 const minPadding = 2.0;
+const minPageContentPadding = 20.0;
 const minElevation = 3.0;
 const minFormOuterPadding = formContentHeight;
 const minContentPadding = 5.0;

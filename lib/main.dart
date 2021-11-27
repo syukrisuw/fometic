@@ -53,7 +53,8 @@ class SetaraApp extends StatelessWidget with WidgetsBindingObserver {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive, overlays: []);
+    //SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky, overlays: []);
+    //SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
     //set to main route in AppPages with name AppRoutes.MAIN (main_page.dart)
     return GetMaterialApp(
         title: "Fometic Application",

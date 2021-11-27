@@ -1,3 +1,4 @@
+import 'dart:core';
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
@@ -17,7 +18,7 @@ class SetaraFormWidget extends StatefulWidget {
   final List<SetaraReactiveField> reactiveFields;
   final GetxController? controller;
 
-  const SetaraFormWidget({
+  SetaraFormWidget({
     this.key,
     required this.formTitle,
     this.formSubTitle = "",
@@ -30,6 +31,24 @@ class SetaraFormWidget extends StatefulWidget {
 }
 
 class _SetaraFormWidgetState extends State<SetaraFormWidget> {
+  final _formKey = GlobalKey<FormState>();
+  List<TextEditingController> _controllerList = <TextEditingController>[];
+  int _totalFields = 0;
+  final List<Widget> _formFieldList = <Widget>[];
+
+  @override
+  void initState() {
+    super.initState();
+    _totalFields = widget.reactiveFields.length;
+    initiateController();
+  }
+
+  @override
+  void dispose() {
+    disposeController();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final controller = widget.controller;
@@ -55,14 +74,15 @@ class _SetaraFormWidgetState extends State<SetaraFormWidget> {
               ),
             ),
             const SizedBox(height: minFormContentPadding),
-            Container(
+            RepaintBoundary(
+              child: Container(
               //Content Section of the form
               //decoration: formContentBoxDecoration(context),
               padding: const EdgeInsets.all(minPadding),
               child: constraints.maxWidth < 400
                   ? _buildSmallForm(context)
                   : _buildLargeForm(context),
-            ),
+            ),),
           ],
         ));
       },
@@ -74,13 +94,17 @@ class _SetaraFormWidgetState extends State<SetaraFormWidget> {
     logger.info("_buildSmallForm: childSize:$childSize");
     if (childSize == 1) {
       return Form(
-        child: getInputWidget(context, widget.reactiveFields.elementAt(0)),
+        child: getInputWidgetByIndex(0),
+        //getInputWidget(context, widget.reactiveFields.elementAt(0)),
       );
     }
+
     List<Widget> smallFormChildren = [];
     for (int i = 0; i < childSize; i++) {
       smallFormChildren
-          .add(getInputWidget(context, widget.reactiveFields.elementAt(i)));
+          .add(getInputWidgetByIndex(i));
+      //smallFormChildren
+      //           .add(getInputWidget(context, widget.reactiveFields.elementAt(i)));
       if (i < childSize - 1) {
         smallFormChildren.add(const SizedBox(
           height: minFormContentPadding,
@@ -237,6 +261,96 @@ class _SetaraFormWidgetState extends State<SetaraFormWidget> {
           );
         }
     }
+  }
+
+  Widget getInputWidgetByIndex(int index){
+    return _formFieldList.elementAt(index);
+  }
+
+  Widget initiateInputWidget( SetaraReactiveField setaraReactiveField) {
+    switch (setaraReactiveField.type) {
+      case SetaraReactiveFieldType.stringType:
+        {
+          TextEditingController _textEditingController = TextEditingController();
+          _controllerList.add(_textEditingController);
+          return Container(
+            padding: const EdgeInsets.only(left: minContentPadding, right: minContentPadding),
+            height: formContentHeight * 2,
+            child : TextFormField(
+              controller: _textEditingController,
+              key: UniqueKey(),
+              decoration: InputDecoration(
+                contentPadding: const EdgeInsets.only(left: minContentPadding),
+                border: const OutlineInputBorder(gapPadding: 0),
+                labelText: setaraReactiveField.labelText,
+                hintText: setaraReactiveField.hintText,
+              ),));
+        }
+      case SetaraReactiveFieldType.spacerType:
+        {
+          return const SizedBox(width: double.infinity, height:1);
+        }
+      case SetaraReactiveFieldType.buttonType:
+        {
+
+          return Container(
+            padding: const EdgeInsets.only(left: minContentPadding, right: minContentPadding),
+            height: formContentHeight * 2,
+            width: double.infinity,
+            child : ElevatedButton(
+              onPressed: (){}, child: Text(setaraReactiveField.labelText),
+            ),);
+        }
+      case SetaraReactiveFieldType.numericType:
+        {
+          TextEditingController _textEditingController = TextEditingController();
+          _controllerList.add(_textEditingController);
+          return Container(
+              padding: const EdgeInsets.only(left: minContentPadding, right: minContentPadding),
+              height: formContentHeight * 2,
+              width: double.infinity,
+              child : TextFormField(
+                key: UniqueKey(),
+                controller: _textEditingController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  labelText: setaraReactiveField.labelText,
+                  hintText: setaraReactiveField.hintText,
+                ),
+              ));
+        }
+      default:
+        {
+          TextEditingController _textEditingController = TextEditingController();
+          _controllerList.add(_textEditingController);
+          return Container(
+            padding: const EdgeInsets.only(left: minContentPadding, right: minContentPadding),
+            height: formContentHeight * 2,
+            child : TextFormField(
+              key: UniqueKey(),
+              controller: _textEditingController,
+              decoration: InputDecoration(
+                contentPadding: const EdgeInsets.only(left: minContentPadding),
+                border: const OutlineInputBorder(gapPadding: 0),
+                labelText: setaraReactiveField.labelText,
+                hintText: setaraReactiveField.hintText,
+              ),),
+          );
+        }
+    }
+  }
+
+  void initiateController() {
+    if (_controllerList.isNotEmpty) {
+      disposeController();
+    }
+    for (int i=0;i<_totalFields;i++) {
+      _formFieldList.add(initiateInputWidget(widget.reactiveFields[i]));
+    }
+  }
+
+  void disposeController() {
+
   }
 }
 
