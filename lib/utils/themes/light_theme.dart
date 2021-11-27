@@ -36,11 +36,11 @@ ThemeData lightTheme = ThemeData(
   ),
   buttonTheme: const ButtonThemeData(
       colorScheme: ColorScheme(
-          primary: Colors.purple,
+          primary: Colors.greenAccent,
           primaryVariant: Colors.green,
           secondary: Colors.blueAccent,
           secondaryVariant: Color(0xFF041A81),
-          surface: Colors.greenAccent,
+          surface: Color(0xFF041A81),
           background: Colors.greenAccent,
           error: Colors.pinkAccent,
           onPrimary: Colors.greenAccent,
@@ -82,11 +82,11 @@ ThemeData lightTheme = ThemeData(
     button: TextStyle(color: Colors.black54, fontSize: formContentTextSize),
   ),
   colorScheme: const ColorScheme(
-      primary: Colors.purple,
+      primary: Colors.greenAccent,
       primaryVariant: Colors.green,
       secondary: Colors.blueAccent,
       secondaryVariant: Color(0xFF041A81),
-      surface: Colors.greenAccent,
+      surface: Color(0xFF041A81),
       background: Colors.greenAccent,
       error: Colors.pinkAccent,
       onPrimary: Colors.greenAccent,
