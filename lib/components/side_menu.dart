@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fometic/utils/responsive/responsive.dart';
 import 'package:fometic/utils/strutils/constants.dart';
 
 import 'drawer_list_tile.dart';
@@ -12,10 +13,16 @@ class SideMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var _height = MediaQuery.of(context).size.height;
+    var _width = MediaQuery.of(context).size.width;
+
     return Drawer(
-        child: Container(
+        child: SizedBox(
+          height: _height,
+      width: Responsive.isDesktop(context)? _width/6 : _width * 2/3 ,
       //color: Theme.of(context).appBarTheme.backgroundColor,
       child: ListView(
+        controller: ScrollController(),
         shrinkWrap: true,
         children: <Widget>[
           DrawerHeader(

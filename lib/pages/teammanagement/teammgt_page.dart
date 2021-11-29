@@ -223,11 +223,12 @@ class TeammgtPage extends GetView<TeammgtController> {
           scaffoldKey: teammgtpageScaffoldKey, //controller.scaffoldKey,
           controller: controller,
           onClickMenu: (value1, value2) {
-            controller.appController
-                .onClickMenu(value1, value2);
+            controller.appController.onClickMenu(value1, value2);
             teammgtpageScaffoldKey.currentState!.openEndDrawer();
           },
-          onPressedFAB: () {controller.controlMenu(teammgtpageScaffoldKey);},
+          onPressedFAB: () {
+            controller.controlMenu(teammgtpageScaffoldKey);
+          },
           //resizeToAvoidBottomInset: true,
           appBar: AppBar(
             toolbarHeight: 40,
@@ -263,31 +264,45 @@ class TeammgtPage extends GetView<TeammgtController> {
           body: PageStorage(
             bucket: bucketGlobal,
             child: SafeArea(
-              child: SingleChildScrollView(
-                key: controller.teammgtPageKey,
-            padding: const EdgeInsets.all(minContentPadding),
-            //reverse: true,
-            child: Stack(
-              children: [
-                Center(
-                  child: Column(
-                    children: formList,
+                child: Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              color: Colors.blue,
+              child: Stack(
+                children: [
+                  Positioned(
+                    left: Responsive.isDesktop(context)? MediaQuery.of(context).size.width / 6:0,
+                    child: Container(
+                      height: MediaQuery.of(context).size.height,
+                      width: Responsive.isDesktop(context)? MediaQuery.of(context).size.width *5/ 6:MediaQuery.of(context).size.width,
+                      child: SingleChildScrollView(
+                        key: controller.teammgtPageKey,
+                        padding: const EdgeInsets.all(minContentPadding),
+                        //reverse: true,
+                        child: Center(
+                          child: Column(
+                            children: formList,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
 
-                // We want this side menu only for large screen
-                if (Responsive.isDesktop(context))
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width / 6,
-                    // and it takes 1/6 part of the screen
-                    child: SideMenu(onClickMenu: (value1, value2) {
-                      controller.appController
-                          .onClickMenu(value1, value2);
-                    }),
-                  ),
-              ],
-            ),
-          )),),
+                  // We want this side menu only for large screen
+                  if (Responsive.isDesktop(context))
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width / 6,
+                      // and it takes 1/6 part of the screen
+                      child: SideMenu(
+                          key: UniqueKey(),onClickMenu: (value1, value2) {
+                        controller.appController.onClickMenu(value1, value2);
+                      }),
+                    ),
+                ],
+              ),
+            )),
+          ),
         ));
   }
 }

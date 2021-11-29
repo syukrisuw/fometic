@@ -82,12 +82,18 @@ class MainPage extends StatelessWidget {
             ],
           ),
           body: SafeArea(
-            child: Stack(
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              child: Stack(
               children: [
-                SizedBox(
+                Positioned(
+                  left : Responsive.isDesktop(context) ? MediaQuery.of(context).size.width/7 : 0,
+                  child : Container(
+                    padding: Responsive.isDesktop(context) ? const EdgeInsets.only(left: 10, right: 10): EdgeInsets.zero,
                   // Page Container that takes 5/6 part of the screen
-                  height: double.infinity,
-                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  width: Responsive.isDesktop(context) ? MediaQuery.of(context).size.width*6/7 : MediaQuery.of(context).size.width,
                   child: GetBuilder<MainPageController>(
                     builder: (controller) {
                       if (controller.setaraPageWidget == null) {
@@ -98,7 +104,7 @@ class MainPage extends StatelessWidget {
                       return controller.setaraPageWidget!;
                     },
                   ),
-                ),
+                ),),
                 // We want this side menu only for large screen
                 if (Responsive.isDesktop(context))
                   SizedBox(
@@ -110,7 +116,7 @@ class MainPage extends StatelessWidget {
                     }),
                   ),
               ],
-            ),
+            ),)
           ),
         ));
   }
