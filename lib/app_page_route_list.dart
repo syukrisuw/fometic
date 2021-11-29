@@ -4,7 +4,7 @@ import 'package:fometic/pages/teammanagement/teammgt_page.dart';
 import 'package:get/get.dart';
 import 'package:fometic/pages/main_page.dart';
 
-import 'package:fometic/routes/app_routes.dart';
+import 'package:fometic/utils/navigations/routes/app_routes.dart';
 
 class AppPageRouteList {
   static var list = [

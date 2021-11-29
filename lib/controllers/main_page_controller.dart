@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:fometic/controllers/app_controller.dart';
 import 'package:fometic/pages/login/login_page.dart';
-import 'package:fometic/pages/main_page.dart';
-import 'package:fometic/pages/teammanagement/teammgt_page.dart';
 import 'package:get/get.dart';
 import 'package:fometic/models/transaction_model.dart';
+import 'package:simple_logger/simple_logger.dart';
 
 
-//final logger = SimpleLogger();
+final logger = SimpleLogger();
 
 class MainPageController extends GetxController {
-  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
 
   late AppController appController;
   static const TAG = "MainController";
@@ -77,7 +76,7 @@ class MainPageController extends GetxController {
 
 
 
-  void controlMenu() {
+  void controlMenu(dynamic scaffoldKey) {
     //logger.info("controlMenu Clicked");
     if (!scaffoldKey.currentState!.isDrawerOpen) {
       scaffoldKey.currentState!.openDrawer();

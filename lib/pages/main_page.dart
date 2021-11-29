@@ -14,7 +14,10 @@ import 'package:simple_logger/simple_logger.dart';
 
 final logger = SimpleLogger();
 
-class MainPage extends GetView<MainPageController> {
+GlobalKey<ScaffoldState> mainpageScaffoldKey = GlobalKey<ScaffoldState>();
+
+
+class MainPage extends StatelessWidget {
   final String pageTitle = "Fometic Indonesia";
   final Widget initialContentWidget = HomeSection();
 
@@ -22,20 +25,25 @@ class MainPage extends GetView<MainPageController> {
 
 //  MainPage({Key? key, required this.pageTitle, required this.initialContentWidget}) : super(key: key);
 
+
   @override
   Widget build(BuildContext context) {
+    Get.put<MainPageController>(MainPageController(),  permanent: true);
+    MainPageController controller = Get.find<MainPageController>();
     return GestureDetector(
         onTap: () {
           FocusScope.of(context).requestFocus(FocusNode());
         },
         child: SetaraScaffold(
-          scaffoldKey: controller.scaffoldKey,
+          scaffoldKey: mainpageScaffoldKey,
           controller: controller,
           resizeToAvoidBottomInset: true,
-          onPressedFAB: controller.controlMenu,
+          onPressedFAB: (){controller.controlMenu(mainpageScaffoldKey);},
           onClickMenu: (value1, value2) {
             controller.appController
-                .onClickMenu(value1, value2, controller.scaffoldKey);
+                .onClickMenu(value1, value2);
+            mainpageScaffoldKey.currentState!.openEndDrawer();
+
           },
           appBar: AppBar(
             toolbarHeight: 40,
@@ -98,7 +106,7 @@ class MainPage extends GetView<MainPageController> {
                     // and it takes 1/6 part of the screen
                     child: SideMenu(onClickMenu: (value1, value2) {
                       controller.appController
-                          .onClickMenu(value1, value2, controller.scaffoldKey);
+                          .onClickMenu(value1, value2);
                     }),
                   ),
               ],

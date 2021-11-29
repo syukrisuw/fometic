@@ -27,6 +27,8 @@ List<GlobalKey<FormState>> formKeyList = [
   GlobalKey<FormState>()
 ];
 
+GlobalKey<ScaffoldState> teammgtpageScaffoldKey = GlobalKey<ScaffoldState>();
+
 class TeammgtPage extends GetView<TeammgtController> {
 //  static final List<GlobalKey<FormState>> formKeyList = [GlobalKey<FormState>(),GlobalKey<FormState>(),];
   //static final GlobalKey<FormState> formKey2 = GlobalKey<FormState>();
@@ -218,13 +220,14 @@ class TeammgtPage extends GetView<TeammgtController> {
           FocusScope.of(context).requestFocus(FocusNode());
         },
         child: SetaraScaffold(
-          scaffoldKey: controller.scaffoldKey, //controller.scaffoldKey,
+          scaffoldKey: teammgtpageScaffoldKey, //controller.scaffoldKey,
           controller: controller,
           onClickMenu: (value1, value2) {
             controller.appController
-                .onClickMenu(value1, value2, controller.scaffoldKey);
+                .onClickMenu(value1, value2);
+            teammgtpageScaffoldKey.currentState!.openEndDrawer();
           },
-          onPressedFAB: controller.controlMenu,
+          onPressedFAB: () {controller.controlMenu(teammgtpageScaffoldKey);},
           //resizeToAvoidBottomInset: true,
           appBar: AppBar(
             toolbarHeight: 40,
@@ -279,7 +282,7 @@ class TeammgtPage extends GetView<TeammgtController> {
                     // and it takes 1/6 part of the screen
                     child: SideMenu(onClickMenu: (value1, value2) {
                       controller.appController
-                          .onClickMenu(value1, value2, controller.scaffoldKey);
+                          .onClickMenu(value1, value2);
                     }),
                   ),
               ],

@@ -12,7 +12,7 @@ class MainBinding extends Bindings {
   @override
   void dependencies() {
     //Cannot using tag because the controller used in GetView
-    Get.put<MainPageController>(MainPageController(),  permanent: true);
+
     Get.lazyPut(()=>LoginPageController(), fenix: true);
     Get.put<DemoPageController>(DemoPageController(),  permanent: true);
     Get.put<TeammgtController>(TeammgtController(),  permanent: true);

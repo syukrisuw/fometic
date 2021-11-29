@@ -11,9 +11,6 @@ class TeammgtController extends GetxController {
   late FocusNode? initialFocusNode;
   PageStorageKey<String> teammgtPageKey = const PageStorageKey<String>("TeamManagement Page");
 
-  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
-
   TextEditingController emailTxCtr = TextEditingController();
 
   TextEditingController usernameTxCtr = TextEditingController();
@@ -42,7 +39,7 @@ class TeammgtController extends GetxController {
     logger.info("onCancelButtonPressed");
   }
 
-  void controlMenu() {
+  void controlMenu(dynamic scaffoldKey) {
     logger.info("controlMenu Clicked");
     if (!scaffoldKey.currentState!.isDrawerOpen) {
       scaffoldKey.currentState!.openDrawer();

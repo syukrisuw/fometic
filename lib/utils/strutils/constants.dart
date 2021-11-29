@@ -94,3 +94,20 @@ const formSizeBoxSpacer =  SizedBox(
 width: minFormContentPadding,
 height: minFormContentPadding,
 );
+
+
+///Setara component in demo page
+///
+const double minDrawerWidth = 100;
+const double minDrawerHeight = 200;
+const double minPageSectionWidth = 200;
+const double minPageSectionHeight = 200;
+const double minDrawerPagePadding = 30;
+const double minDrawerPadding = 50;
+const double minPagePadding = 70;
+const Duration drawerAnimationDuration = Duration(milliseconds: 500);
+const double minPageRotation = 45;
+const double minRadius= 10.0;
+const double minInnerRadius= 8.0;
+const double minOutterRadius= 12.0;
+

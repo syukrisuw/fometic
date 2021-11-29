@@ -16,8 +16,8 @@ class Header extends GetView<MainPageController> {
       children: [
         if (!Responsive.isDesktop(context))
           IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: controller.controlMenu,
+            icon: const Icon(Icons.menu),
+            onPressed: (){},//controller.controlMenu,
           ),
         if (!Responsive.isMobile(context))
           Text(
@@ -26,7 +26,7 @@ class Header extends GetView<MainPageController> {
           ),
         if (!Responsive.isMobile(context))
           Spacer(flex: Responsive.isDesktop(context) ? 2 : 1),
-        Expanded(child: SearchField()),
+        Expanded(child: const SearchField()),
         ProfileCard( logOutPressed: () {},)
       ],
     );

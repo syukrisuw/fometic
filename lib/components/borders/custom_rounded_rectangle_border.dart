@@ -3,12 +3,10 @@
 // found in the LICENSE file.
 
 
-import 'dart:ui' as ui show lerpDouble;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/painting.dart';
-import 'package:simple_logger/simple_logger.dart';
-import 'package:win32/win32.dart';
+//import 'package:simple_logger/simple_logger.dart';
 
 
 
@@ -37,9 +35,7 @@ class CustomRRectBorder extends OutlinedBorder {
     this.bottomLeft = false,
     this.bottomRight = false,
 
-  }) : assert(side != null),
-        assert(borderRadius != null),
-        super(side: side);
+  }) : super(side: side);
 
   ///
   /// selected corner
@@ -66,7 +62,6 @@ class CustomRRectBorder extends OutlinedBorder {
 
   @override
   ShapeBorder? lerpFrom(ShapeBorder? a, double t) {
-    assert(t != null);
     if (a is CustomRRectBorder) {
       return CustomRRectBorder(
         side: BorderSide.lerp(a.side, side, t),
@@ -80,7 +75,7 @@ class CustomRRectBorder extends OutlinedBorder {
 
   @override
   ShapeBorder? lerpTo(ShapeBorder? b, double t) {
-    assert(t != null);
+
     if (b is CustomRRectBorder) {
       return CustomRRectBorder(
         side: BorderSide.lerp(side, b.side, t),
@@ -134,8 +129,7 @@ class CustomRRectBorder extends OutlinedBorder {
 
   @override
   bool operator ==(Object other) {
-    if (other.runtimeType != runtimeType)
-      return false;
+    if (other.runtimeType != runtimeType) return false;
     return other is CustomRRectBorder
         && other.side == side
         && other.borderRadius == borderRadius;

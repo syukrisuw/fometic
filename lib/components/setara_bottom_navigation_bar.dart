@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:fometic/utils/strutils/constants.dart';
+import 'package:simple_logger/simple_logger.dart';
 
 import 'borders/rounded_polygon_border.dart';
 import 'borders/rounded_triangle_border.dart';
 import 'borders/triangle_border.dart';
+import 'dart:math' as math;
 import 'custompainter/setara_bottom_navigation_painter.dart';
 
 typedef _LetIndexPage = bool Function(int value);
 
+typedef MenuCallback = void Function();
+final logger = SimpleLogger();
 
 class SetaraBottomNavigationBar extends StatefulWidget {
   final Key? key;
@@ -19,6 +23,7 @@ class SetaraBottomNavigationBar extends StatefulWidget {
   final double? borderWidth;
   final List<Icon> items;
   final int index;
+  final MenuCallback? menuButtonCallback;
   final ValueChanged<int>? onTap;
   final _LetIndexPage letIndexChange;
   final Curve animationCurve;
@@ -33,6 +38,7 @@ class SetaraBottomNavigationBar extends StatefulWidget {
     this.borderWidth = 0.0,
     this.width,
     this.height,
+    this.menuButtonCallback,
     required this.items,
     this.index = 0,
     this.animationCurve = Curves.easeOut,
@@ -88,7 +94,7 @@ class _SetaraBottomNavigationBarState extends State<SetaraBottomNavigationBar>
                   painter: SetaraBottomNavigationPainter(
                       width: _width,
                       height: _height,
-                      color: widget.color,
+                      backgroundColor: widget.color,
                       borderColor: _borderColor),
                 ),
               ),
@@ -126,42 +132,92 @@ class _SetaraBottomNavigationBarState extends State<SetaraBottomNavigationBar>
                     width: _width * 6 / 64,
                     height: _height * 0.6,
                     child: RepaintBoundary(
-                        child: ElevatedButton(
-                          key: UniqueKey(),
-                      onPressed: () {
-                        logger.info("Menu Clicked");
-                      },
-                      child: widget.items[0],
-                      style: ElevatedButton.styleFrom(
-                            shape: const RoundedPolygonBorder(side: BorderSide(color: Color(
-                                0xffaf8519), width: 2.0, style: BorderStyle.solid),),),
-                      //style: Theme.of(context).elevatedButtonTheme.style,
-                    ),),
+                      child: ElevatedButton(
+                        key: UniqueKey(),
+                        onPressed: widget.menuButtonCallback,
+                        child: widget.items[0],
+                        style: ElevatedButton.styleFrom(
+                          shape: const RoundedRectangleBorder(
+                            side: BorderSide(
+                                color: Color(0xffaf8519),
+                                width: 2.0,
+                                style: BorderStyle.solid),
+                          ),
+                        ),
+                        //style: Theme.of(context).elevatedButtonTheme.style,
+                      ),
+                    ),
                   ),
                   SizedBox(
                     width: _width * 6 / 64,
                     height: _height * 0.6,
-                    child: RepaintBoundary(child: ElevatedButton(
-                      onPressed: () {
-                      },
-                      child: widget.items[1],
-                      style: ElevatedButton.styleFrom(
-                        shape: const RoundedTriangleBorder(side: BorderSide(color: Color(
-                            0xffbbb41d), width: 2.0, style: BorderStyle.solid)),),
-                    ),),
+                    child: RepaintBoundary(
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        child: widget.items[1],
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.zero,
+                          shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(medButtonBorderRadius),
+                                topRight:
+                                Radius.circular(minButtonBorderRadius),
+                                bottomLeft:
+                                Radius.circular(medButtonBorderRadius),
+                                bottomRight:
+                                Radius.circular(minButtonBorderRadius),
+                              ),
+                              side: BorderSide(
+                                  color: Color(0xffaf8519),
+                                  width: 2.0,
+                                  style: BorderStyle.solid)),
+
+                          // shape: const RoundedPolygonBorder(side: BorderSide(color: Color(
+                          //     0xffaf8519), width: 2.0, style: BorderStyle.solid), polyAngle: 3, radian: 0.5 * math.pi),),), //left facing rectangle will use radian = 180 degree or pi
+                        ),
+                        // style: ElevatedButton.styleFrom(
+                        //   shape: const RoundedTriangleBorder(
+                        //       side: BorderSide(
+                        //           color: Color(0xffbbb41d),
+                        //           width: 2.0,
+                        //           style: BorderStyle.solid)),
+                        // ),
+                      ),
+                    ),
                   ),
                   Container(
                     color: Colors.pink,
                     width: _width * 6 / 64,
-                    height:_height * 0.6,
-                    child: RepaintBoundary(child: ElevatedButton(
-                      onPressed: () {
-                      },
-                      child: widget.items[2],
-                      style: ElevatedButton.styleFrom(
-                        shape: const TriangleBorder(side: BorderSide(color: Color(
-                            0xffaf8519), width: 2.0, style: BorderStyle.solid), facing: TriangleFacing.right),),
-                    ),),
+                    height: _height * 0.6,
+                    child: RepaintBoundary(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          logger.info(
+                              "ElevatedButton width: ${_width * 6 / 64}, height: ${_height * 0.6}");
+                        },
+                        child: widget.items[2],
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.zero,
+                          shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(minButtonBorderRadius),
+                                topRight:
+                                    Radius.circular(medButtonBorderRadius),
+                                bottomLeft:
+                                    Radius.circular(minButtonBorderRadius),
+                                bottomRight:
+                                Radius.circular(medButtonBorderRadius),
+                              ),
+                              side: BorderSide(
+                                  color: Color(0xffaf8519),
+                                  width: 2.0,
+                                  style: BorderStyle.solid)),
+
+                          // shape: const RoundedPolygonBorder(side: BorderSide(color: Color(
+                          //     0xffaf8519), width: 2.0, style: BorderStyle.solid), polyAngle: 3, radian: 0.5 * math.pi),),), //left facing rectangle will use radian = 180 degree or pi
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -182,15 +238,23 @@ class _SetaraBottomNavigationBarState extends State<SetaraBottomNavigationBar>
                     width: _width * 7 / 64,
                     height: _height * 0.7,
                     child: ElevatedButton(
-                      onPressed: () {
-                      },
+                      onPressed: () {},
                       child: widget.items[3],
                       style: ElevatedButton.styleFrom(
-                      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(medButtonBorderRadius), topRight: Radius.circular(minButtonBorderRadius),
-                        bottomLeft: Radius.circular(minButtonBorderRadius), bottomRight: Radius.circular(minButtonBorderRadius),
-                      ) , side: BorderSide(color: Color(
-                          0xffaf8519), width: 2.0, style: BorderStyle.solid)),),
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(medButtonBorderRadius),
+                              topRight: Radius.circular(minButtonBorderRadius),
+                              bottomLeft:
+                                  Radius.circular(minButtonBorderRadius),
+                              bottomRight:
+                                  Radius.circular(minButtonBorderRadius),
+                            ),
+                            side: BorderSide(
+                                color: Color(0xffaf8519),
+                                width: 2.0,
+                                style: BorderStyle.solid)),
+                      ),
                     ),
                   ),
                 ],

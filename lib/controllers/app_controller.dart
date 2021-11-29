@@ -3,7 +3,6 @@ import 'package:fometic/pages/main_page.dart';
 import 'package:fometic/pages/sections/agenda/agenda_section.dart';
 import 'package:fometic/pages/sections/dashboard/dashboard_section.dart';
 import 'package:fometic/pages/sections/home/home_section.dart';
-import 'package:fometic/pages/teammanagement/teammgt_page.dart';
 import 'package:fometic/utils/themes/app_theme.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
@@ -47,7 +46,8 @@ class AppController extends GetxController {
     update();
   }
 
-  void onClickMenu(String menuName, String actionPushed, GlobalKey<ScaffoldState> scaffoldKey) {
+  void onClickMenu(String menuName, String actionPushed ) {
+    logger.info("onClickMenu $menuName");
     switch (menuName) {
       case "Home":
         {
@@ -55,8 +55,8 @@ class AppController extends GetxController {
           //Get.back();
           //Get.offNamedUntil("/", ModalRoute.withName('/'));
           //Get.offAll(()=>MainPage());
-          //Get.offNamed("/");
-          Get.offNamed("/home");
+          //Get.toNamed("/");
+          Get.offNamed("/");
           //update();
         }
         break;
@@ -79,15 +79,15 @@ class AppController extends GetxController {
         break;
       case "Team":
         {
-          Get.offNamed("/team");
+          Get.offNamed("/team"); //to dynamically use menu, must go to page with offnamed so the previous widget got cleared
           //Get.to(()=>TeammgtPage());
-          //Get.offNamed("/");
+          //Get.toNamed("/team");
         }
         break;
       case "Theme":
         {
           Get.changeTheme(Get.isDarkMode? AppTheme.light : AppTheme.dark);
-          update();
+          logger.info("Change Theme");
         }
         break;
       default:
@@ -96,11 +96,6 @@ class AppController extends GetxController {
           update();
         }
         break;
-    }
-
-
-    if (scaffoldKey.currentState!.isDrawerOpen) {
-      scaffoldKey.currentState!.openEndDrawer();
     }
 
   }
