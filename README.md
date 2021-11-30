@@ -1,6 +1,6 @@
 # fometic
 
-A new Flutter project.
+Fometic Flutter Multiplatform Application
 
 ## Getting Started
 
